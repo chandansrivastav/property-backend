@@ -1,0 +1,125 @@
+<section class="content">
+    <div class="container-fluid">
+        <%-include("../message")%>
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><%=data.totalProperty || 0%></h3>
+                        <p>Total Property</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><%=data.availableProperty || 0%></h3>
+                        <p>Available Property</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><%=data.soldProperty || 0%></h3>
+                        <p>Sold Property</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3><%=data.waitingForAppProperty || 0%></h3>
+                        <p>Waiting For Approval Property</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Recent Added Property</h3>
+                    <div class="card-tools">
+                        <div class="pagination pagination-sm float-right">
+                            <a href="/v1/admin/manage_property" target="_blank">View all</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Agent Name</th>
+                          <th>Status</th>
+                          <th>Created At</th>
+                          <th style="width: 40px">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%for(let propData of (data?.recentPropertyLst || [])){%>
+                            <tr>
+                                <td><%=propData.title%></td>
+                                <td><%=propData.adminData?.[0] ? propData.adminData[0].name + " (Admin)" : (propData.agentData?.[0]?.name || "")%></td>
+                                <td><%=propData.status?"Active":"Inactive"%></td>
+                                <td><%=moment(propData.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></td>
+                                <td><a href="/v1/admin/manage_property/view_details/<%=propData._id%>" target="_blank"><i class="fas fa-eye"></i></td>
+                            </tr>
+                        <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Recent Property Request</h3>
+                    <div class="card-tools">
+                        <div class="pagination pagination-sm float-right">
+                            <a href="/v1/admin/manage_property_request" target="_blank">View all</a>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>User Name</th>
+                            <th>Status</th>
+                            <th>Meeting Date</th>
+                            <th style="width: 40px">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%for(let propDt of (data?.recentPropertyReqLst || [])){%>
+                            <tr>
+                                <td><a href="/v1/admin/manage_property/view_details/<%=propDt.propertyData[0]?._id%>" target="_blank"><%=propDt.propertyData[0]?.title || "N/A"%></a></td>
+                                <td><%=propDt.name%></td>
+                                <td><%=propDt.status%></td>
+                                <td><%=moment(propDt.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></td>
+                                <td><a href="/v1/admin/manage_property_request/view_details/<%=propDt._id%>" target="_blank"><i class="fas fa-eye"></i></td>
+                            </tr>
+                        <%}%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

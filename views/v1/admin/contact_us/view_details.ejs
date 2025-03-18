@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-12">
+        <%-include("../message")%>
+            <div class="card">
+                <div class="card-body">
+                    <%if(data.status != "Close"){%>
+                        <button class="btn btn-outline-primary mb-2" onclick="markAsCloseContactUs('<%=data._id%>')">Mark As Close</button>
+                    <%}%>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Name:</label>
+                        </div>
+                        <div class="col-6"><%=data.name%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-6"><%=data.email%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Mobile Number:</label>
+                        </div>
+                        <div class="col-6"><%=data.mobile%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Message:</label>
+                        </div>
+                        <div class="col-6"><%=data.message%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Status:</label>
+                        </div>
+                        <div class="col-6"><%=data.status%></div>
+                    </div>
+                    <%if(data.remarks){%>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Close Remarks:</label>
+                            </div>
+                            <div class="col-6"><%=data.remarks%></div>
+                        </div>
+                    <%}%>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Created At:</label>
+                        </div>
+                        <div class="col-6"><%=moment(data.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Updated At:</label>
+                        </div>
+                        <div class="col-6"><%=moment(data.updatedAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

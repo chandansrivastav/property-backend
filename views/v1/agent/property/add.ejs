@@ -1,0 +1,142 @@
+<div class="row">
+    <div class="col-md-12">
+        <%-include("../message")%>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Form Details</h3>
+                </div>
+                <form method="post" id="property_form" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="propertyTitle">Title <strong class="asterisk">*</strong></label>
+                            <input type="text" class="form-control" id="propertyTitle" name="propertyTitle"
+                                placeholder="Enter Title" value="<%=data.title || ''%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryId">Category <strong class="asterisk">*</strong></label>
+                            <select class="form-control" id="categoryId" name="categoryId">
+                                <option value="">Select Category</option>
+                                <%if(Array.isArray(listData?.categoryList)){
+                                    for(let lsdt of listData.categoryList){%>
+                                        <option value="<%=lsdt._id%>" <%if(lsdt.id == data.categoryId){%>selected<%}%>><%=lsdt.name%></option>
+                                <%}}%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationId">Location <strong class="asterisk">*</strong></label>
+                            <select class="form-control" id="locationId" name="locationId">
+                                <option value="">Select Location</option>
+                                <%if(Array.isArray(listData?.locationList)){
+                                    for(let lsdt of listData.locationList){%>
+                                        <option value="<%=lsdt._id%>" <%if(lsdt.id == data.locationId){%>selected<%}%>><%=lsdt.name%></option>
+                                <%}}%>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price <strong class="asterisk">*</strong></label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price"
+                                value="<%=data.price || ''%>">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="image">Image <strong class="asterisk">*</strong></label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input multiple-image" id="image"
+                                            name="image" accept="image/*" multiple>
+                                        <label class="custom-file-label" for="image">Choose file</label>
+                                    </div>
+                                </div>
+                                <div id="previewImage">
+                                    <%if(Array.isArray(data.image)){
+                                        for(let img of data.image){%>
+                                        <img src="<%=APPCONSTANT.SHOWPROPERTYPATH%><%=img%>" height="100">
+                                    <%}}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="details">Details <strong class="asterisk">*</strong></label>
+                            <textarea class="form-control summernote-editor" placeholder="Enter Details" id="details" name="details"
+                                rows="5"><%=data.details || ''%></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="specifications">Specifications <strong class="asterisk">*</strong></label>
+                            <textarea class="form-control summernote-editor" placeholder="Enter Specifications" id="specifications"
+                                name="specifications" rows="5"><%=data.specifications || ''%></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="amenities">Amenities <strong class="asterisk">*</strong></label>
+                            <textarea class="form-control summernote-editor" placeholder="Enter Amenities" id="amenities" name="amenities"
+                                rows="5"><%=data.amenities || ''%></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        <a href="/v1/agent/manage_property" class="btn btn-default ml-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#property_form").validate({
+            rules: {
+                propertyTitle: {
+                    required: true
+                },
+                categoryId: {
+                    required: true
+                },
+                locationId: {
+                    required: true
+                },
+                price: {
+                    required: true,
+                    number: true
+                },
+                image: {
+                    required: ("<%=data.image?false:true%>" == 'true') ? true : false
+                },
+                details: {
+                    required: true
+                },
+                specifications: {
+                    required: true
+                },
+                amenities: {
+                    required: true
+                }
+            },
+            messages: {
+                propertyTitle: {
+                    required: "Please enter title"
+                },
+                categoryId: {
+                    required: "Please select category"
+                },
+                locationId: {
+                    required: "Please select location"
+                },
+                price: {
+                    required: "Please enter price",
+                    number: "Price should be in number"
+                },
+                image: {
+                    required: "Please select image"
+                },
+                details: {
+                    required: "Please provide property details"
+                },
+                specifications: {
+                    required: "Please provide specifications of property"
+                },
+                amenities: {
+                    required: "Please provide amenities of property"
+                }
+            }
+        })
+    })
+</script>

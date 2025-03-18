@@ -1,0 +1,130 @@
+<div class="card card-solid">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="col-12">
+                    <%if(data.image && data.image.length){%>
+                        <img src="<%=APPCONSTANT.SHOWPROPERTYPATH%><%=data.image[0]%>" class="product-image" alt="Property Image">
+                    <%}else{%>
+                        <img src="<%=APPCONSTANT.NOIMAGE%>" class="product-image" alt="Property Image">
+                    <%}%>
+                </div>
+                <div class="col-12 product-image-thumbs">
+                    <%if(data.image && data.image.length){
+                        let i = 0;
+                        for(let img of data.image){%>
+                            <div class="product-image-thumb <%if(i==0){%>active<%}%>"><img src="<%=APPCONSTANT.SHOWPROPERTYPATH%><%=img%>" alt="Property Image"></div>
+                    <%i++}}else{%>
+                        <div class="product-image-thumb active"><img src="<%=APPCONSTANT.NOIMAGE%>" alt="Property Image"></div>
+                    <%}%>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <h3 class="my-3"><%=data.title || "N/A"%></h3>
+                <p><%-data.details || "N/A"%></p>
+                <hr>
+                <h5>Category</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.categoryData[0].name || "N/A"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Location</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.locationData[0].name || "N/A"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Agent Name</h5>
+                <div class="btn-group btn-group-toggle">
+                    <label class="text-center">
+                        <%if(data.agentData[0]?.name){%>
+                            <a href="/v1/admin/manage_agent/view_details/<%=data.agentId%>" target="_blank"><%=data.agentData[0]?.name%></a>
+                        <%}else{%>
+                            <a href="javascript:void(0)"><%=data.adminData[0]?.name || "N/A"%> (Admin)</a>
+                        <%}%>
+                    </label>
+                </div>
+                <h5 class="mt-1">Status</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.status?"Active":"Inactive"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Created At</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=moment(data.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Updated At</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=moment(data.updatedAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></span>
+                    </label>
+                </div>
+                <div class="bg-gray py-2 px-3 mt-2">
+                    <label class="btn btn-default text-center">
+                        <span class="text-l">₹ <%=data.price || "N/A"%></span>
+                    </label>
+                </div>
+                <div id="property-status">
+                    <%if(data.propertyStatus == "Approved"){%>
+                        <div class="mt-2">
+                            <div class="btn btn-primary btn-lg btn-flat">
+                                Approved
+                            </div>
+                        </div>
+                    <%}else if(data.propertyStatus == "Sold"){%>
+                        <div class="mt-2">
+                            <div class="btn btn-success btn-lg btn-flat">
+                                Sold
+                            </div>
+                        </div>
+                    <%}else if(data.propertyStatus == "Pending"){%>
+                        <div class="mt-2">
+                            <div class="btn btn-info btn-lg btn-flat" onclick="changePropertyStatus('approved')">
+                            Approve Property
+                            </div>
+                            <div class="btn btn-danger btn-lg btn-flat" onclick="changePropertyStatus('rejected')">
+                                Reject
+                            </div>
+                        </div>
+                    <%}else{%>
+                        <div class="mt-2">
+                            <div class="btn btn-info btn-lg btn-flat" onclick="changePropertyStatus('re-approved')">
+                                Approve Property
+                            </div>
+                            <div class="btn btn-danger btn-lg btn-flat" onclick="changePropertyStatus('re-rejected')">
+                                Re-Reject
+                            </div>
+                        </div>
+                    <%}%>
+                    <%if(data.rejectedReason){%>
+                        <p><strong>Reject Reason: </strong><%=data.rejectedReason%></p>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <nav class="w-100">
+                <div class="nav nav-tabs" id="property-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="property-desc-tab" data-toggle="tab" href="#property-desc"
+                        role="tab" aria-controls="property-desc" aria-selected="true">Details</a>
+                    <a class="nav-item nav-link" id="property-specifications-tab" data-toggle="tab" href="#property-specifications"
+                        role="tab" aria-controls="property-specifications" aria-selected="false">Specifications</a>
+                    <a class="nav-item nav-link" id="property-amenities-tab" data-toggle="tab" href="#property-amenities"
+                        role="tab" aria-controls="property-amenities" aria-selected="false">Amenities</a>
+                </div>
+            </nav>
+            <div class="tab-content p-3" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="property-desc" role="tabpanel"
+                    aria-labelledby="property-desc-tab"> <%-data.details || "N/A"%> </div>
+                <div class="tab-pane fade" id="property-specifications" role="tabpanel" aria-labelledby="property-specifications-tab">
+                    <%-data.specifications || "N/A"%> </div>
+                <div class="tab-pane fade" id="property-amenities" role="tabpanel" aria-labelledby="property-amenities-tab">
+                    <%-data.amenities || "N/A"%> </div>
+            </div>
+        </div>
+    </div>
+</div>

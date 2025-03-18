@@ -1,0 +1,60 @@
+<div class="modal fade" id="dataAddModal" tabindex="-1" role="dialog" aria-labelledby="dataAdd"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dataAddModal">Form Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<%=url%>" method="post" id="static_image_form" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="col-12">
+                      <div class="form-group">
+                          <label for="image">Image <strong class="asterisk">*</strong></label>
+                          <div class="custom-file">
+                              <input type="file" class="custom-file-input single-image" id="image" name="image" accept="image/*">
+                              <label class="custom-file-label" for="image">Choose file</label>
+                          </div>
+                      </div>
+                      <div id="previewImage"></div>
+                  </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+        $("#static_image_form").validate({
+            rules: {
+                image: {
+                    required: true
+                }
+            },
+            messages: {
+                image: {
+                    required: "Please select image"
+                }
+            }            
+        });
+        $(".single-image").change(function () {
+          let reader = new FileReader();
+          reader.onload = (evt) => {
+              $("#previewImage").html(`<img src="${evt.target.result}" height="100">`)
+          }
+          if ($(this).prop("files").length > 0) {
+              reader.readAsDataURL($(this).prop("files")[0])
+          }
+      })
+    })
+</script> 

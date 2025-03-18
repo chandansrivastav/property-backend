@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-12">
+        <%-include("../message")%>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Form Details</h3>
+                </div>
+                <form method="post" id="testimonial_form" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="name">Name <strong class="asterisk">*</strong></label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<%=data.name || ''%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="image">Image <strong class="asterisk">*</strong></label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input single-image" id="image" name="image" accept="image/*">
+                                        <label class="custom-file-label" for="image">Choose file</label>
+                                    </div>
+                                </div>
+                                <div id="previewImage">
+                                    <%if(data.image){%>
+                                        <img src="<%=APPCONSTANT.SHOWTESTIMONIALSPATH%><%=data.image%>" height="100">
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="address">Address <strong class="asterisk">*</strong></label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" value="<%=data.address || ''%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="content">Content <strong class="asterisk">*</strong></label>
+                                    <textarea class="form-control summernote-editor" placeholder="Enter Content" id="content" name="content"><%=data.content || ''%></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        <a href="/v1/admin/manage_testimonial" class="btn btn-default ml-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#testimonial_form").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                image: {
+                    required: ("<%=data.image?false:true%>" == 'true')?true:false
+                },
+                address: {
+                    required: true
+                },
+                content: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Please enter a name"
+                },
+                image: {
+                    required: "Please select a image"
+                },
+                address: {
+                    required: "Please enter a address"
+                },
+                content: {
+                    required: "Please provide a content"
+                }
+            }            
+        })
+    })
+</script>

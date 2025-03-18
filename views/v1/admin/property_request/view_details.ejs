@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12">
+        <%-include("../message")%>
+            <div class="card">
+                <div class="card-body">
+                    <%if(data.propertyData[0]?.propertyStatus == "Approved"){
+                    if(data.status != "Accepted" && data.status != "Rejected"){%>
+                        <button class="btn btn-outline-primary mb-2" onclick="propertyReqStatusMark('Accepted')">Approve</button>
+                        <button class="btn btn-outline-danger mb-2" onclick="propertyReqStatusMark('Rejected')">Reject</button>
+                    <%}}%>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Property Name:</label>
+                        </div>
+                        <div class="col-6"><a href="/v1/admin/manage_property/view_details/<%=data.propertyId%>" target="_blank"><%=data.propertyData[0]?.title || "N/A"%></a></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Agent Name:</label>
+                        </div>
+                        <%if(data.agentData[0]?.name){%>
+                            <div class="col-6"><a href="/v1/admin/manage_agent/view_details/<%=data.propertyData[0]?.agentId%>" target="_blank"><%=data.agentData[0]?.name%></a></div>
+                        <%}else{%>
+                            <div class="col-6"><a href="javascript:void(0)"><%=data.adminData[0]?.name || "N/A"%> (Admin)</a></div>
+                        <%}%>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Name:</label>
+                        </div>
+                        <div class="col-6"><%=data.name%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-6"><%=data.email%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Mobile Number:</label>
+                        </div>
+                        <div class="col-6"><%=data.mobile%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Meeting Date:</label>
+                        </div>
+                        <div class="col-6"><%=moment(data.req_date).format(APPCONSTANT.DEFAULTDATEFORMAT)%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Status:</label>
+                        </div>
+                        <div class="col-6"><%=data.status%>
+                            <%if(data?.propertyReqData[0]){%>
+                                <a href="/v1/admin/manage_property_request/view_details/<%=data.propertyReqData[0]._id%>" target="_blank">To <%=data.propertyReqData[0].name%></a>
+                            <%}%>
+                        </div>
+                    </div>
+                    <%if(data.remarks){%>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Remarks:</label>
+                            </div>
+                            <div class="col-6"><%=data.remarks%></div>
+                        </div>
+                    <%}%>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Created At:</label>
+                        </div>
+                        <div class="col-6"><%=moment(data.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Updated At:</label>
+                        </div>
+                        <div class="col-6"><%=moment(data.updatedAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

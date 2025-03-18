@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <%-include("../message")%>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Form Details</h3>
+                </div>
+                <form method="post" id="static_page_form">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name <strong class="asterisk">*</strong></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<%=data.name || ''%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Content <strong class="asterisk">*</strong></label>
+                            <textarea class="form-control summernote-editor" placeholder="Enter Content" id="content" name="content"><%=data.content || ''%></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        <a href="/v1/admin/manage_static_page" class="btn btn-default ml-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#static_page_form").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                content: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Please enter a name"
+                },
+                content: {
+                    required: "Please provide a content"
+                }
+            }            
+        })
+    })
+</script>

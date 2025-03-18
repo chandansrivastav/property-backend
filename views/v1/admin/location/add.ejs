@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-md-12">
+        <%-include("../message")%>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Form Details</h3>
+                </div>
+                <form method="post" id="location_form"  enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Name <strong class="asterisk">*</strong></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<%=data.name || ''%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="orderBy">Order By <strong class="asterisk">*</strong></label>
+                            <input type="text" class="form-control" id="orderBy" name="orderBy" placeholder="Enter Order By" value="<%=data.orderBy || '0'%>">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="image">Image <strong class="asterisk">*</strong></label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input single-image" id="image" name="image" accept="image/*">
+                                        <label class="custom-file-label" for="image">Choose file</label>
+                                    </div>
+                                </div>
+                                <div id="previewImage">
+                                    <%if(data.image){%>
+                                        <img src="<%=APPCONSTANT.SHOWLOCATIONPATH%><%=data.image%>" height="100">
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        <a href="/v1/admin/manage_location" class="btn btn-default ml-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#location_form").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                orderBy: {
+                    required: true,
+                    number: true,
+                    min: 0
+                },
+                image: {
+                    required: ("<%=data.image?false:true%>" == 'true')?true:false
+                }
+            },
+            messages: {
+                name: {
+                    required: "Please enter a name"
+                },
+                orderBy:{
+                    required: "Please enter order by"
+                },
+                image: {
+                    required: "Please select a image"
+                }
+            }            
+        })
+    })
+</script>

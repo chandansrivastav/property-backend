@@ -1,0 +1,59 @@
+<div class="card card-solid">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="col-12">
+                    <%if(data.image){%>
+                        <img src="<%=APPCONSTANT.SHOWAGENTIMAGEPATH%><%=data.image%>" class="product-image" alt="Agent Image">
+                    <%}else{%>
+                        <img src="<%=APPCONSTANT.NOIMAGE%>" class="product-image" alt="No Image">
+                    <%}%>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <h3 class="my-3"><%=data.name || "N/A"%></h3>
+                <hr>
+                <h5>Email</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.email || "N/A"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Mobile</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.mobile || "N/A"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Status</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.status?"Active":"Inactive"%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Agent Status</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=data.profileStatus%></span>
+                    </label>
+                </div>
+                <h5 class="mt-1">Created At</h5>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="text-center">
+                        <span class="text-l"><%=moment(data.createdAt).format(APPCONSTANT.DEFAULTDATEFORMAT)%></span>
+                    </label>
+                </div>
+                <%if(data.rejectReason){%>
+                    <p><strong>Reject Reason: </strong><%=data.rejectReason%></p>
+                <%}%>
+                <div class="mt-2">
+                    <%if(data.profileStatus != "Approved"){%>
+                        <div class="btn btn-primary btn-lg btn-flat" onclick="verifyAgent('Approved')">Approve</div>
+                    <%}if(data.profileStatus == "Pending"){%>
+                        <div class="btn btn-danger btn-lg btn-flat" onclick="verifyAgent('Rejected')">Reject</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
